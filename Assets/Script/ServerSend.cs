@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ServerSend
 {
@@ -131,6 +133,39 @@ public class ServerSend
         using (Packet _Packet = new Packet((int)ServerPackets.playerRespawned))
         {
             _Packet.Write(_Player.Id);
+
+            SendTcpDataToAll(_Packet);
+        }
+    }
+
+    public static void CreateItemSpawner(int _ToClient, int _SpawnerId, Vector3 _SpawnerPosition, bool _HasItem)
+    {
+        using(Packet _Packet = new Packet ((int)ServerPackets.createItemSpawner))
+        {
+            _Packet.Write(_SpawnerId);
+            _Packet.Write(_SpawnerPosition);
+            _Packet.Write(_HasItem);
+
+            SendTcpData(_ToClient, _Packet);
+        }
+    }
+
+    public static void ItemSpawnd(int _SpawnerId)
+    {
+        using(Packet _Packet = new Packet((int)ServerPackets.itemSpawnd))
+        {
+            _Packet.Write(_SpawnerId);
+
+            SendTcpDataToAll(_Packet);
+        }
+    }
+
+    public static void itemPickedUp(int _SpawnerId, int _ByPlayer)
+    {
+        using (Packet _Packet = new Packet((int)ServerPackets.itemPickedUp))
+        {
+            _Packet.Write(_SpawnerId);
+            _Packet.Write(_ByPlayer);
 
             SendTcpDataToAll(_Packet);
         }

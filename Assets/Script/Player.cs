@@ -12,6 +12,9 @@ public class Player : MonoBehaviour
     public float Health;
     public float MaxHealth = 100.0f;
 
+    public int ItemAmount = 0;
+    public int MaxItemAmount = 3;
+
     private float MoveSpeed = 5f / Constants.TICKS_PER_SEC;
     private bool[] Inputs;
 
@@ -76,7 +79,7 @@ public class Player : MonoBehaviour
             if (Object.collider.CompareTag("Player") && Object.collider != this.GetComponent<Collider2D>())
             {
                 Debug.Log($"Hit To {Object.collider.GetComponent<Player>().UserName}");
-                _Hit.collider.GetComponent<Player>().TakeDamage(50.0f);
+                Object.collider.GetComponent<Player>().TakeDamage(50.0f);
 
                 break;
             }
@@ -110,5 +113,16 @@ public class Player : MonoBehaviour
         Health = MaxHealth;
         ServerSend.PlayerRespawn(this);
         yield break;
+    }
+
+    public bool AttemptPickUpItem()
+    {
+        if(ItemAmount >= MaxItemAmount)
+        {
+            return false;
+        }
+
+        ItemAmount++;
+        return true;
     }
 }

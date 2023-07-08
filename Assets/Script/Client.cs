@@ -211,6 +211,11 @@ public class Client
                 ServerSend.SpawnPlayer(_Client.MyId, MyPlayer);
             }
         }
+
+        foreach (ItemSpawner _ItemSpawner in ItemSpawner.spawners.Values)
+        {
+            ServerSend.CreateItemSpawner(MyId, _ItemSpawner.SpawnerId, _ItemSpawner.transform.position, _ItemSpawner.HasItem);
+        }
     }
 
     private void Disconnect()
