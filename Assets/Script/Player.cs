@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
     public int ItemAmount = 0;
     public int MaxItemAmount = 3;
 
+    public float ThrowForce = 600.0f;
+
     private float MoveSpeed = 5f / Constants.TICKS_PER_SEC;
     private bool[] Inputs;
 
@@ -72,8 +74,12 @@ public class Player : MonoBehaviour
 
     public void Shoot(Vector3 _ViewDirection)
     {
-        RaycastHit2D[] _Hit = Physics2D.RaycastAll(ShootOrigin.position, _ViewDirection, 25.0f);
+        if(Health <= 0.0f)
+        {
+            return;
+        }
 
+        RaycastHit2D[] _Hit = Physics2D.RaycastAll(ShootOrigin.position, _ViewDirection, 25.0f);
         foreach (RaycastHit2D Object in _Hit)
         {
             if (Object.collider.CompareTag("Player") && Object.collider != this.GetComponent<Collider2D>())
@@ -83,6 +89,22 @@ public class Player : MonoBehaviour
 
                 break;
             }
+        }
+    }
+
+    public void ThrowItem(Vector3 _ViewDirection)
+    {
+        if (Health <= 0.0f)
+        {
+            return;
+        }
+
+        if(ItemAmount > 0)
+        {
+            Debug.Log("Use Item Amount");
+
+            ItemAmount--;
+            NetworkManager.Instance.InstantiateProjectile(ShootOrigin).Initialize(_ViewDirection, ThrowForce, Id);
         }
     }
 

@@ -497,6 +497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: 2828390851974974201, guid: d2ad97391f7052043a26628a1da054ea, type: 3}
+  ProjectilePrefab: {fileID: 1963702746570958635, guid: b863437b9500ada449c3ad4c4cf3302a, type: 3}
 --- !u!4 &1680077552
 Transform:
   m_ObjectHideFlags: 0

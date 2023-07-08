@@ -40,4 +40,13 @@ public class ServerHandle
 
         Server.Clients[_FromClient].MyPlayer.Shoot(_ShootDirection);
     }
+
+    public static void PlayerThrowItem(int _FromClient, Packet _Packet)
+    {
+        Debug.Log("ThrowStart");
+
+        Vector3 _ThrowDirection = _Packet.ReadVector3();
+
+        Server.Clients[_FromClient].MyPlayer.ThrowItem(_ThrowDirection);
+    }
 }

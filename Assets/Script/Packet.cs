@@ -17,6 +17,9 @@ public enum ServerPackets
     createItemSpawner,
     itemSpawnd,
     itemPickedUp,
+    spawnProjectile,
+    projectilePosition,
+    projectileExploded,
 }
 
 /// <summary>클라이언트에서 서버로 전송한다.</summary>
@@ -25,6 +28,7 @@ public enum ClientPackets
     welcomeReceived = 1,
     playerMovement,
     playerShoot,
+    playerThrowItem,
 }
 
 public class Packet : IDisposable
