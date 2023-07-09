@@ -45,6 +45,14 @@ public class ServerHandle
     {
         int _Type = _Packet.ReadInt();
         Server.Clients[_FromClient].MyPlayer.TypeSetting(_Type);
+
+        foreach(Client _Player in Server.Clients.Values)
+        {
+            if (_Player.MyPlayer.Type <= 0)
+                return;
+        }
+
+        ServerSend.DoneSelect();
     }
 
     public static void PlayerThrowItem(int _FromClient, Packet _Packet)

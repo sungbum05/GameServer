@@ -97,6 +97,14 @@ public class ServerSend
         }
     }
 
+    public static void DoneSelect()
+    {
+        using (Packet _Packet = new Packet((int)ServerPackets.doneSelect))
+        {
+            SendTcpDataToAll(_Packet);
+        }
+    }
+
     public static void SpawnPlayer(int _ToClient, Player _Player)
     {
         using (Packet _Packet = new Packet((int)ServerPackets.spawnPlayer))
