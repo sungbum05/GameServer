@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     public int Id;
     public string UserName;
+    public int Type;
 
     public Transform ShootOrigin;
     public float Health;
@@ -27,6 +28,13 @@ public class Player : MonoBehaviour
         Health = MaxHealth;
 
         Inputs = new bool[4];
+    }
+
+    public void TypeSetting(int _Type)
+    {
+        Type = _Type;
+
+        ServerSend.ReceiveSelectData(Id, Type);
     }
 
     public void FixedUpdate()

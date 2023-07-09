@@ -9,6 +9,7 @@ public class Server
 {
     public static int MaxPlayers { get; private set; }
     public static int Port { get; private set; }
+    public static int CurPlayer { get; private set; }
 
     public static Dictionary<int, Client> Clients = new Dictionary<int, Client>();
     public delegate void PacketHandler(int _FromClient, Packet _Packet);
@@ -45,10 +46,12 @@ public class Server
         {
             if (Clients[i].MyTcp.Socket == null)
             {
-                Clients[i].MyTcp.Connect(_Client);
+                Clients[i].MyTcp.Connect(_Client);  
                 return;
             }
         }
+
+       
 
         Debug.Log($"{_Client.Client.RemoteEndPoint} Failed To Connect: Server Full");
     }
@@ -121,6 +124,8 @@ public class Server
                 { (int)ClientPackets.playerMovement, ServerHandle.PlayerMovement},
                 { (int)ClientPackets.playerShoot, ServerHandle.PlayerShoot},
                 { (int)ClientPackets.playerThrowItem, ServerHandle.PlayerThrowItem},
+                { (int)ClientPackets.waitOtherPlayer, ServerHandle.WaitOtherPlayer},
+                { (int)ClientPackets.selectCharacter, ServerHandle.SelectCharacter},
             };
         Debug.Log("Initialized Packets");
     }
@@ -129,5 +134,17 @@ public class Server
     {
         TcpListener.Stop();
         UdpListener.Close();
+    }
+
+    //My Func
+    public static void AddPlayerCount(int Count)
+    {
+        CurPlayer += Count;
+        Debug.Log($"PlayerCount: {CurPlayer}");
+
+        if(CurPlayer >= MaxPlayers)
+        {
+            ServerSend.GoToCharacterSelect(true);
+        }
     }
 }

@@ -20,6 +20,10 @@ public enum ServerPackets
     spawnProjectile,
     projectilePosition,
     projectileExploded,
+
+    //My Add Packet
+    goToCharacterSelect,
+    receiveSelectData,
 }
 
 /// <summary>클라이언트에서 서버로 전송한다.</summary>
@@ -29,6 +33,10 @@ public enum ClientPackets
     playerMovement,
     playerShoot,
     playerThrowItem,
+
+    //My Add Packet
+    waitOtherPlayer,
+    selectCharacter,
 }
 
 public class Packet : IDisposable

@@ -72,6 +72,31 @@ public class ServerSend
         }
     }
 
+    //캐릭터 선택창으로 넘어가라는 패킷
+    public static void GoToCharacterSelect(bool IsGotoCharacter)
+    {
+        Debug.Log("GotoCharacterScene");
+
+        using (Packet _Packet = new Packet((int)ServerPackets.goToCharacterSelect))
+        {
+            _Packet.Write(IsGotoCharacter);
+
+            SendTcpDataToAll(_Packet);
+        }
+    }
+
+    //캐릭터 선택 데이터를 회신 하는 패킷
+    public static void ReceiveSelectData(int _ToClient, int _Type)
+    {
+        using (Packet _Packet = new Packet((int)ServerPackets.receiveSelectData))
+        {
+            _Packet.Write(_ToClient);
+            _Packet.Write(_Type);
+
+            SendTcpDataToAll(_Packet);
+        }
+    }
+
     public static void SpawnPlayer(int _ToClient, Player _Player)
     {
         using (Packet _Packet = new Packet((int)ServerPackets.spawnPlayer))

@@ -41,6 +41,12 @@ public class ServerHandle
         Server.Clients[_FromClient].MyPlayer.Shoot(_ShootDirection);
     }
 
+    public static void SelectCharacter(int _FromClient, Packet _Packet)
+    {
+        int _Type = _Packet.ReadInt();
+        Server.Clients[_FromClient].MyPlayer.TypeSetting(_Type);
+    }
+
     public static void PlayerThrowItem(int _FromClient, Packet _Packet)
     {
         Debug.Log("ThrowStart");
@@ -48,5 +54,11 @@ public class ServerHandle
         Vector3 _ThrowDirection = _Packet.ReadVector3();
 
         Server.Clients[_FromClient].MyPlayer.ThrowItem(_ThrowDirection);
+    }
+
+    public static void WaitOtherPlayer(int _FromClient, Packet _Packet)
+    {
+        int PlayerCount = _Packet.ReadInt();
+        Server.AddPlayerCount(PlayerCount);
     }
 }
